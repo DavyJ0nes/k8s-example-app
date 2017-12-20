@@ -4,10 +4,14 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 )
 
 func TestRouter(t *testing.T) {
-	r := Router()
+	testBuildTime := time.Now().Format("20060102_03:04:05")
+	testCommit := "abcd123"
+	testRelease := "0.0.1"
+	r := Router(testBuildTime, testCommit, testRelease)
 	ts := httptest.NewServer(r)
 	defer ts.Close()
 

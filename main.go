@@ -16,7 +16,7 @@ func main() {
 	flag.Parse()
 
 	log.Printf("Starting Service...\ncommit: %s, build_time: %s, release: %s", version.Commit, version.BuildTime, version.Release)
-	router := handlers.Router()
+	router := handlers.Router(version.BuildTime, version.Commit, version.Release)
 	log.Print("The service is ready to go...")
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", *port), router))
 }

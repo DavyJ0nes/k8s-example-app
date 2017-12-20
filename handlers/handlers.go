@@ -4,8 +4,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func Router() *mux.Router {
+// Router is the mux Router for the Service
+func Router(buildTime, commit, release string) *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/home", home).Methods("GET")
+	r.HandleFunc("/home", home(buildTime, commit, release)).Methods("GET")
 	return r
 }
