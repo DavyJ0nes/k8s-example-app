@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/davyj0nes/k8s-demo/handlers"
-	"github.com/davyj0nes/k8s-demo/version"
+	"github.com/davyj0nes/k8s-example-app/handlers"
+	"github.com/davyj0nes/k8s-example-app/version"
 )
 
 func main() {

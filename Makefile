@@ -1,12 +1,12 @@
-PROJECT ?= github.com/davyj0nes/k8s-demo
+PROJECT ?= github.com/davyj0nes/k8s-example-app
 USERNAME ?= davyj0nes
-APP ?= k8s-demo
+APP ?= k8s-example-app
 PORT ?= 8080
 
 GOOS ?= linux
 GOARCH ?= amd64
 
-RELEASE ?= 0.0.1
+RELEASE ?= 0.0.3
 COMMIT ?= $(shell git rev-parse --short HEAD)
 BUILD_TIME ?= $(shell date -u '+%Y-%m-%d_%H:%M:%S')
 
@@ -27,6 +27,10 @@ run: build
 
 container: build
 	docker build -t ${USERNAME}/${APP}:${RELEASE} .
+	docker tag ${USERNAME}/${APP}:${RELEASE} ${USERNAME}/${APP}:latest
+
+push: container
+	docker push docker.io/${USERNAME}/${APP}:${RELEASE}
 
 run: container
 	docker stop ${USERNAME}/${APP}:${RELEASE} || true && docker rm ${USERNAME}/${APP}:${RELEASE} || true
