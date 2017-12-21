@@ -1,0 +1,4 @@
+.vscode*
+k8s-demo
+.DS_Store
+.DS-Store
