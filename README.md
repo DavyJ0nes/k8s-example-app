@@ -1,4 +1,4 @@
-# k8s-demo
+# k8s-example-app
 
 ## Description
 
@@ -7,8 +7,9 @@ Created by following [this tutorial](https://blog.gopheracademy.com/advent-2017/
 
 ## Usage
 
-To run `make run`
-To build `make container`
+- To run `make run`
+- To build `make container`
+- To deploy `make push`
 
 ## License
 
