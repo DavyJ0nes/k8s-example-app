@@ -1,0 +1,36 @@
+version: '3'
+services:
+
+  app:
+    image: davyj0nes/k8s-example-app:latest
+    ports:
+      - "8080:8080"
+
+  prometheus:
+    image: "quay.io/prometheus/prometheus"
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus/etc/:/etc/prometheus/"
+
+  netdata:
+    image: titpetric/netdata
+    ports:
+      - "19999:19999"
+    volumes:
+      - "/proc:/host/proc:ro"
+      - "/sys:/host/sys:ro"
+    cap_add:
+      - SYS_PTRACE
+
+  grafana:
+    image: "grafana/grafana"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=openup
+      - GF_INSTALL_PLUGINS=raintank-kubernetes-app
+
+    ports:
+      - "3001:3000"
+    volumes:
+      - "./grafana/lib:/var/lib/grafana"
+      - "./grafana/etc:/var/etc/grafana"

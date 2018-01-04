@@ -1,3 +1,5 @@
 .vscode*
 .DS_Store
 .DS-Store
+*vendor*
+grafana/lib*
