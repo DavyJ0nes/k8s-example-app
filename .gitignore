@@ -3,3 +3,4 @@
 .DS-Store
 *vendor*
 grafana/lib*
+*k8s-example-app
