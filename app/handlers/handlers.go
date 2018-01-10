@@ -20,20 +20,13 @@ var (
 )
 
 func init() {
-	httpRequestsResponseTime = prometheus.NewSummary(prometheus.SummaryOpts{
-		Namespace: "http",
-		Name:      "response_time_seconds",
-		Help:      "Request response times",
-	})
-
-	reqDuration = prometheus.NewHistogramVec(prometheus.HistogramOpts{
+	requestDuration = prometheus.NewHistogramVec(prometheus.HistogramOpts{
 		Name:    "request_duration_seconds",
 		Help:    "Time (in secods) spent serving HTTP requests",
 		Buckets: prometheus.DefBuckets,
 	}, []string{"method", "route", "status_code"})
 
-	prometheus.MustRegister(httpRequestsResponseTime)
-	prometheus.MustRegister(reqDuration)
+	prometheus.MustRegister(requestDuration)
 }
 
 // Router is the mux Router for the Service
@@ -60,10 +53,8 @@ func Router(buildTime, commit, release string) http.Handler {
 func middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
-			start := time.Now()
 			m := httpsnoop.CaptureMetrics(next, w, r)
 
-			httpRequestsResponseTime.Observe(float64(time.Since(start).Seconds()))
-			reqDuration.WithLabelValues(r.Method, r.URL.Path, strconv.Itoa(m.Code)).Observe(m.Duration.Seconds())
+			requestDuration.WithLabelValues(r.Method, r.URL.Path, strconv.Itoa(m.Code)).Observe(m.Duration.Seconds())
 		})
 }
