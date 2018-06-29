@@ -16,7 +16,7 @@ import (
 
 var (
 	httpRequestsResponseTime prometheus.Summary
-	reqDuration              *prometheus.HistogramVec
+	requestDuration          *prometheus.HistogramVec
 )
 
 func init() {
